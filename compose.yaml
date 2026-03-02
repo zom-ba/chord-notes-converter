@@ -1,0 +1,16 @@
+services:    
+  app:
+    build: ./docker/app
+    volumes:
+      - type: bind
+        source: ./docker/app
+        target: /app
+
+  web:
+    image: nginx:stable
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/web/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
