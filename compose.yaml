@@ -6,6 +6,9 @@ services:
       - type: bind
         source: ./docker/app
         target: /app
+      - type: bind
+        source: ./frontend
+        target: /usr/share/nginx/html
 
   web: # Webサーバー
     image: nginx:stable
