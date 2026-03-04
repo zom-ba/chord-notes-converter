@@ -6,9 +6,6 @@ services:
       - type: bind
         source: ./docker/app
         target: /app
-      - type: bind
-        source: ./frontend
-        target: /usr/share/nginx/html
 
   web: # Webサーバー
     image: nginx:stable
@@ -18,5 +15,8 @@ services:
       - type: bind
         source: ./docker/web/nginx.conf
         target: /etc/nginx/conf.d/default.conf
+      - type: bind
+        source: ./frontend
+        target: /usr/share/nginx/html
     depends_on: # アプリケーションコンテナに依存
       - app

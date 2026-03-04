@@ -1,3 +1,9 @@
-p {
-  color: rgb(80, 80, 80);
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f0f0f0;
+}
+
+.error {
+  color: red;
 }
