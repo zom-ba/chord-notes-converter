@@ -14,7 +14,7 @@ convertButtonNotes.addEventListener('click', convertNotes);
 async function convertChord() {
     try {
         let notes_str = inputChord.value;
-        notes_str = notes_str.replace(/\s+/g, '').replace(/、/g, ',');
+        notes_str = notes_str.replace(/\s+/g, '').replace(/、/g, ',').toUpperCase().replace(/[＃♯]/g, '#').replace(/[♭-]/g, 'b');
 
         const response = await fetch(`/api/identify-chord?notes=${encodeURIComponent(notes_str)}`);
         if (!response.ok) {
@@ -24,7 +24,7 @@ async function convertChord() {
         const data = await response.json();
         console.log(data);
 
-        outputChord.textContent = (`コード: ${data.chord_name}`);
+        outputChord.textContent = `${data.chord_name}`;
     } catch (error) {
         outputChord.textContent = (`Error: ${error.message}`);
     }
@@ -34,8 +34,9 @@ async function convertChord() {
 async function convertNotes() {
     try {
         let chord_name = inputNotes.value;
-        chord_name = chord_name.replace(/\s+/g, '');
+        chord_name = chord_name.replace(/\s+/g, '').replace(/[＃♯]/g, '#').replace(/[♭b]/g, '-');
 
+        console.log(chord_name);
         const response = await fetch(`/api/identify-notes?chord_name=${encodeURIComponent(chord_name)}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -44,7 +45,7 @@ async function convertNotes() {
         const data = await response.json();
         console.log(data);
         
-        outputNotes.textContent = (`構成音: ${data.notes.join(', ')}`);
+        outputNotes.textContent = `${data.notes.replace(/#/g, '♯').replace(/-/g, '♭')}`;
     } catch (error) {
         outputNotes.textContent = (`Error: ${error.message}`);
     }
