@@ -6,7 +6,8 @@ convertButton.addEventListener('click', convertChord);
 
 async function convertChord() {
     try {
-        const notes = input.value;
+        let notes = input.value;
+        notes = notes.replace(/\s+/g, '').replace(/、/g, ',');
         const response = await fetch(`/api/identify-chord?notes=${encodeURIComponent(notes)}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
