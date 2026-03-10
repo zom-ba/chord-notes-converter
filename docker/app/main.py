@@ -5,13 +5,13 @@ app = FastAPI()
 @app.get("/identify-chord")
 def identify_chord(notes: str = ""):
 
-    notes_list = notes.split(",") # 文字列をカンマで分割してリストに変換
-    if not notes_list or all(note.strip() == "" for note in notes_list): # 構成音がない場合の処理
+    if not notes.strip(): # 構成音が空の場合の処理
         return {
             "error": "No notes provided",
             "chord_name": "Unknown Chord"
         }
 
+    notes_list = notes.split(",") # 文字列をカンマで分割してリストに変換
     try: # コード名を返す処理
         chord_obj = chord.Chord(notes_list) # 構成音のリストからコードオブジェクトを作成
         chord_name = harmony.chordSymbolFromChord(chord_obj).figure # コードオブジェクトからコード名を取得
@@ -26,4 +26,26 @@ def identify_chord(notes: str = ""):
         return {
             "error": str(e),
             "chord_name": "Unknown Chord"
+        }
+
+@app.get("/identify-notes")
+def get_chord_notes(chord_name: str = ""):
+
+    if not chord_name.strip(): # コード名が空の場合の処理
+        return {
+            "error": "No chord name provided",
+            "notes": []
+        }
+
+    try: # 構成音を返す処理
+        if chord_name == "C":
+            notes_names = ["C", "E", "G"]
+        return {
+            "notes": notes_names
+        }
+
+    except Exception as e: # エラー処理
+        return {
+            "error": str(e),
+            "notes": []
         }
