@@ -7,9 +7,17 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <h1>Chord Notes Converter</h1>
-    <input type="text" id="input" placeholder="Enter chord name">
-    <button id="convert">Convert</button>
-    <div id="output">コード</div>
+    <div> <!-- 構成音をコードに変換(identify-chord) -->
+      <h1>構成音をコードに変換</h1>
+      <input type="text" id="inputChord" placeholder="例）C, E, G">
+      <button id="convertButtonChord">変換</button>
+      <div id="outputChord">コード</div>
+    </div>
+    <div> <!-- コードを構成音に変換(identify-notes) -->
+      <h1>コードを構成音に変換</h1>
+      <input type="text" id="inputNotes" placeholder="例）C">
+      <button id="convertButtonNotes">変換</button>
+      <div id="outputNotes">構成音</div>
+    </div>
   </body>
 </html>
