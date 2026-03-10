@@ -8,7 +8,7 @@ def identify_chord(notes: str = ""):
     if not notes.strip(): # 構成音が空の場合の処理
         return {
             "error": "No notes provided",
-            "chord_name": "Unknown Chord"
+            "chord_name": "構成音を入力してください"
         }
 
     notes_list = notes.split(",") # 文字列をカンマで分割してリストに変換
@@ -19,13 +19,13 @@ def identify_chord(notes: str = ""):
         if chord_obj.root().name != chord_bass and "/" not in chord_name: # コードのルート音と最低音が異なり、分数コードでないなら分数コードにする
             chord_name = f"{chord_name}/{chord_bass}"
         return {
-            "chord_name": chord_name
+            "chord_name": "コード：" + chord_name
         }
 
     except Exception as e: #エラー処理
         return {
             "error": str(e),
-            "chord_name": "Unknown Chord"
+            "chord_name": "有効な形式ではありません"
         }
 
 @app.get("/identify-notes")
@@ -34,18 +34,18 @@ def get_chord_notes(chord_name: str = ""):
     if not chord_name.strip(): # コード名が空の場合の処理
         return {
             "error": "No chord name provided",
-            "notes": []
+            "notes": "コードを入力してください"
         }
 
     try: # 構成音を返す処理
-        if chord_name == "C":
-            notes_names = ["C", "E", "G"]
+        chord_obj = harmony.ChordSymbol(chord_name) # コード名からコードオブジェクトを作成
+        notes = ", ".join([note.name for note in chord_obj.pitches]) # コードオブジェクトから構成音のリストを取得
         return {
-            "notes": notes_names
+            "notes": "構成音：" + notes
         }
 
     except Exception as e: # エラー処理
         return {
             "error": str(e),
-            "notes": []
+            "notes": "有効な形式ではありません"
         }
