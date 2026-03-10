@@ -5,10 +5,14 @@ let outputChord = document.getElementById('outputChord');
 let inputNotes = document.getElementById('inputNotes');
 let convertButtonNotes = document.getElementById('convertButtonNotes');
 let outputNotes = document.getElementById('outputNotes');
+let inputScale = document.getElementById('inputScale');
+let estimateButtonScale = document.getElementById('estimateButtonScale');
+let outputScale = document.getElementById('outputScale');
 
 // イベントリスナーの追加
 convertButtonChord.addEventListener('click', convertChord);
 convertButtonNotes.addEventListener('click', convertNotes);
+estimateButtonScale.addEventListener('click', estimateScale);
 
 // コード名を構成音に変換する関数
 async function convertChord() {
@@ -24,7 +28,7 @@ async function convertChord() {
         const data = await response.json();
         console.log(data);
 
-        outputChord.textContent = `${data.chord_name}`;
+        outputChord.textContent = `${data.chord_name.replace(/#/g, '♯').replace(/-/g, '♭')}`;
     } catch (error) {
         outputChord.textContent = (`Error: ${error.message}`);
     }
@@ -48,5 +52,25 @@ async function convertNotes() {
         outputNotes.textContent = `${data.notes.replace(/#/g, '♯').replace(/-/g, '♭')}`;
     } catch (error) {
         outputNotes.textContent = (`Error: ${error.message}`);
+    }
+}
+
+async function estimateScale() {
+    try {
+        let chord_name = inputScale.value;
+        chord_name = chord_name.replace(/\s+/g, '').replace(/[＃♯]/g, '#').replace(/[♭b]/g, '-');
+
+        console.log(chord_name);
+        const response = await fetch(`/api/estimate-scale?chord_name=${encodeURIComponent(chord_name)}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        
+        outputScale.textContent = `${data.scales.replace(/#/g, '♯').replace(/-/g, '♭')}`;
+    } catch (error) {
+        outputScale.textContent = (`Error: ${error.message}`);
     }
 }
