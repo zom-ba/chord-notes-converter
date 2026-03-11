@@ -1,18 +1,51 @@
 // 要素の取得
+
 let inputChord = document.getElementById('inputChord');
 let convertButtonChord = document.getElementById('convertButtonChord');
 let outputChord = document.getElementById('outputChord');
+
 let inputNotes = document.getElementById('inputNotes');
 let convertButtonNotes = document.getElementById('convertButtonNotes');
 let outputNotes = document.getElementById('outputNotes');
+
 let inputScale = document.getElementById('inputScale');
 let estimateButtonScale = document.getElementById('estimateButtonScale');
 let outputScale = document.getElementById('outputScale');
+
+let displayButtonChord = document.getElementById('displayButtonChord');
+let displayButtonNotes = document.getElementById('displayButtonNotes');
+let displayButtonScale = document.getElementById('displayButtonScale');
+
+let chordSection = document.querySelectorAll('.chordSection');
+let notesSection = document.querySelectorAll('.notesSection');
+let scaleSection = document.querySelectorAll('.scaleSection');
 
 // イベントリスナーの追加
 convertButtonChord.addEventListener('click', convertChord);
 convertButtonNotes.addEventListener('click', convertNotes);
 estimateButtonScale.addEventListener('click', estimateScale);
+
+// 表示切替のイベントリスナー
+displayButtonChord.addEventListener('click', () => switchSection(chordSection));
+displayButtonNotes.addEventListener('click', () => switchSection(notesSection));
+displayButtonScale.addEventListener('click', () => switchSection(scaleSection));
+
+// セクションの表示管理
+function switchSection(target) {
+    try {
+        const allSections = [chordSection, notesSection, scaleSection];
+
+        allSections.forEach(section => {
+            if (section === target) {
+                section.forEach(el => el.classList.remove('hidden'));
+            } else {
+                section.forEach(el => el.classList.add('hidden'));
+            }
+        });
+    } catch (error) {
+        console.error('Error switching sections:', error);
+    }
+}
 
 // コード名を構成音に変換する関数
 async function convertChord() {

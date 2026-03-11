@@ -1,9 +1,133 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f0f0f0;
+* {
+  box-sizing: border-box;
 }
 
-.error {
-  color: red;
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "title title title"
+    "inputText outputText button"
+    "inputPiano outputPiano button";
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 200px;
+  grid-template-rows: 80px minmax(0, 1fr) minmax(0, 2fr);
+  height: 100vh;
+  background: rgb(240, 240, 240);
+}
+
+.title {
+  background-color: rgb(50, 25, 50);
+  color: rgb(240, 240, 240);
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 16px;
+}
+
+.inputText {
+  background-color: rgb(235, 225, 235);
+  grid-area: inputText;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chordSection, .notesSection, .scaleSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.outputText {
+  background-color: rgb(235, 225, 235);
+  grid-area: outputText;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputPiano {
+  background-color: rgb(235, 225, 235);
+  grid-area: inputPiano;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outputPiano {
+  background-color: rgb(235, 225, 235);
+  grid-area: outputPiano;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonSection {
+  background-color: rgb(75, 50, 75);
+  grid-area: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.inputBox {
+  padding: 6px;
+  font-size: 16px;
+  border: 1px solid rgb(200, 100, 200);
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border: 1px solid rgb(255, 100, 255);
+    box-shadow: 0 0 5px rgba(200, 100, 200, 0.5);
+  }
+}
+
+.convertButton {
+  background-color: rgb(200, 100, 200);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: rgb(100, 50, 100);
+  }
+}
+
+.displayButton {
+  background-color: rgb(150, 100, 150);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 400;
+  width: 100%;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: rgb(100, 50, 100);
+  }
+}
+
+.hidden {
+  display: none;
 }
