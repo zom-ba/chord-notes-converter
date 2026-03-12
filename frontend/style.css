@@ -12,13 +12,16 @@ body {
 .container {
   display: grid;
   grid-template-areas:
-    "title title title"
-    "inputText outputText button"
-    "inputPiano outputPiano button";
+    "title       title        title"
+    ".           .            button"
+    "inputText   outputText   button"
+    "inputPiano4 outputPiano4 button"
+    "inputPiano3 outputPiano3 button"
+    ".           .            button";
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 200px;
-  grid-template-rows: 80px minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-rows: 80px minmax(0, 1fr) minmax(0, 5fr) minmax(0, 10fr) minmax(0, 10fr) minmax(0, 1fr);
   height: 100vh;
-  background: rgb(240, 240, 240);
+  background-color: rgb(235, 225, 235);
 }
 
 .title {
@@ -32,8 +35,14 @@ body {
 }
 
 .inputText {
-  background-color: rgb(235, 225, 235);
   grid-area: inputText;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outputText {
+  grid-area: outputText;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,25 +54,29 @@ body {
   gap: 8px;
 }
 
-.outputText {
-  background-color: rgb(235, 225, 235);
-  grid-area: outputText;
+.inputPiano4 {
+  grid-area: inputPiano4;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.inputPiano {
-  background-color: rgb(235, 225, 235);
-  grid-area: inputPiano;
+.outputPiano4 {
+  grid-area: outputPiano4;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.outputPiano {
-  background-color: rgb(235, 225, 235);
-  grid-area: outputPiano;
+.inputPiano3 {
+  grid-area: inputPiano3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outputPiano3 {
+  grid-area: outputPiano3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +104,7 @@ body {
 
   &:focus {
     border: 1px solid rgb(255, 100, 255);
-    box-shadow: 0 0 5px rgba(200, 100, 200, 0.5);
+    box-shadow: 0 0 7px rgba(200, 100, 200, 0.5);
   }
 }
 
@@ -103,7 +116,7 @@ body {
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 600;
   transition: all 0.3s ease;
   
   &:hover {
@@ -119,7 +132,7 @@ body {
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 600;
   width: 100%;
   transition: all 0.3s ease;
   
@@ -128,6 +141,69 @@ body {
   }
 }
 
+.displayButton.active {
+  background-color: rgb(100, 50, 100);
+  box-shadow: 0 0 10px rgba(200, 100, 200, 0.8);
+}
+
+.inputButton {
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.inputButton.whiteKey {
+  background-color: rgb(255, 230, 255);
+  color: rgb(50, 25, 50);
+  width: 70px;
+  height: 150px;
+  padding-top: 100px;
+  z-index: 1;
+  border: 2px solid rgb(240, 200, 240);
+
+  &:hover {
+    background-color: rgb(220, 150, 220);
+  }
+}
+
+.inputButton.blackKey {
+  background-color: rgb(50, 25, 50);
+  color: rgb(255, 230, 255);
+  height: 90px;
+  width: 60px;
+  padding-top: 40px;
+  margin-bottom: 60px;
+  margin-left: -30px;
+  margin-right: -30px;
+  align-items: center;
+  z-index: 2;
+  border: 2px solid rgb(100, 50, 100);
+    
+  &:hover {
+    background-color: rgb(120, 60, 120);
+  }
+}
+
+.inputButton.whiteKey.active {
+  background-color: rgb(220, 150, 220);
+  box-shadow: 0 0 20px rgba(150, 75, 150, 0.3);
+}
+
+.inputButton.blackKey.active {
+  background-color: rgb(120, 60, 120);
+  box-shadow: 0 0 20px rgba(150, 75, 150, 0.3);
+}
+
 .hidden {
   display: none;
+}
+
+.disabled {
+  pointer-events: none;
+  filter: brightness(0.6);
+  cursor: not-allowed;
 }

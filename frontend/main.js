@@ -16,35 +16,62 @@ let displayButtonChord = document.getElementById('displayButtonChord');
 let displayButtonNotes = document.getElementById('displayButtonNotes');
 let displayButtonScale = document.getElementById('displayButtonScale');
 
+let displayButtons = document.querySelectorAll('.displayButton');
 let chordSection = document.querySelectorAll('.chordSection');
 let notesSection = document.querySelectorAll('.notesSection');
 let scaleSection = document.querySelectorAll('.scaleSection');
+
+let inputButtons = document.querySelectorAll('.inputButton')
+
+// 機能切替ボタンのイベントリスナー
+displayButtonChord.addEventListener('click', () => switchSection(chordSection));
+displayButtonNotes.addEventListener('click', () => switchSection(notesSection));
+displayButtonScale.addEventListener('click', () => switchSection(scaleSection));
 
 // イベントリスナーの追加
 convertButtonChord.addEventListener('click', convertChord);
 convertButtonNotes.addEventListener('click', convertNotes);
 estimateButtonScale.addEventListener('click', estimateScale);
 
-// 表示切替のイベントリスナー
-displayButtonChord.addEventListener('click', () => switchSection(chordSection));
-displayButtonNotes.addEventListener('click', () => switchSection(notesSection));
-displayButtonScale.addEventListener('click', () => switchSection(scaleSection));
+// 機能切替ボタンのアクティブ状態管理
+displayButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        displayButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        if (button.id=='displayButtonChord') {
+            inputButtons.forEach(btn => btn.classList.remove('disabled'));
+        } else {
+            inputButtons.forEach(btn => btn.classList.add('disabled'));
+        }
+    });
+});
+
+// 入力ボタンのアクティブ状態管理、テキストボックス書き換え
+inputButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.toggle('active');
+        inputButtonsList = [];
+        inputButtons.forEach(btn => {
+            if (btn.classList.contains('active')) {
+                inputButtonsList.push(btn.textContent);
+            }
+        });
+        inputChord.value = inputButtonsList.join(', ');
+    });
+});
 
 // セクションの表示管理
 function switchSection(target) {
-    try {
-        const allSections = [chordSection, notesSection, scaleSection];
+    const allSections = [chordSection, notesSection, scaleSection];
 
-        allSections.forEach(section => {
-            if (section === target) {
-                section.forEach(el => el.classList.remove('hidden'));
-            } else {
-                section.forEach(el => el.classList.add('hidden'));
-            }
-        });
-    } catch (error) {
-        console.error('Error switching sections:', error);
-    }
+    allSections.forEach(section => {
+        if (section === target) {
+            section.forEach(el => el.classList.remove('hidden'));
+        } else {
+            section.forEach(el => el.classList.add('hidden'));
+        }
+    });
 }
 
 // コード名を構成音に変換する関数

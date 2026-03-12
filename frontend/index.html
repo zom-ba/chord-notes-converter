@@ -7,10 +7,10 @@
     <script src="main.js" defer></script>
   </head>
   <body class="container">
-    <div class="title">
+    <div class="title"> <!-- タイトル -->
       <h1>Chord Notes Converter</h1>
     </div>
-    <div class="inputText">
+    <div class="inputText"> <!-- 入力（テキスト） -->
       <div class="chordSection"> <!-- 構成音をコードに変換(identify-chord) -->
         <input type="text" class="inputBox" id="inputChord" placeholder="例）C, E, G">
         <button class="convertButton" id="convertButtonChord">変換</button>
@@ -24,18 +24,46 @@
         <button class="convertButton" id="estimateButtonScale">推測</button>
       </div>
     </div>
-    <div class="outputText">
+    <div class="outputText"> <!-- 出力（テキスト） -->
       <div class="chordSection" id="outputChord">構成音を入力してください</div>
       <div class="notesSection hidden" id="outputNotes">コードを入力してください</div>
       <div class="scaleSection hidden" id="outputScale">コードを入力してください</div>
     </div>
-    <div class="inputPiano">
-      <p>inputPiano</p>
+    <div class="inputPiano3"> <!-- 入力（ピアノロール） -->
+      <button class="inputButton whiteKey octave3" id="buttonC3">C</button>
+      <button class="inputButton blackKey octave3" id="buttonDb3">D♭</button>
+      <button class="inputButton whiteKey octave3" id="buttonD3">D</button>
+      <button class="inputButton blackKey octave3" id="buttonEb3">E♭</button>
+      <button class="inputButton whiteKey octave3" id="buttonE3">E</button>
+      <button class="inputButton whiteKey octave3" id="buttonF3">F</button>
+      <button class="inputButton blackKey octave3" id="buttonGb3">G♭</button>
+      <button class="inputButton whiteKey octave3" id="buttonG3">G</button>
+      <button class="inputButton blackKey octave3" id="buttonAb3">A♭</button>
+      <button class="inputButton whiteKey octave3" id="buttonA3">A</button>
+      <button class="inputButton blackKey octave3" id="buttonBb3">B♭</button>
+      <button class="inputButton whiteKey octave3" id="buttonB3">B</button>
     </div>
-    <div class="outputPiano">
-      <p>outputPiano</p>
+    <div class="inputPiano4"> <!-- 入力（ピアノロール） -->
+      <button class="inputButton whiteKey octave4" id="buttonC4">C</button>
+      <button class="inputButton blackKey octave4" id="buttonDb4">D♭</button>
+      <button class="inputButton whiteKey octave4" id="buttonD4">D</button>
+      <button class="inputButton blackKey octave4" id="buttonEb4">E♭</button>
+      <button class="inputButton whiteKey octave4" id="buttonE4">E</button>
+      <button class="inputButton whiteKey octave4" id="buttonF4">F</button>
+      <button class="inputButton blackKey octave4" id="buttonGb4">G♭</button>
+      <button class="inputButton whiteKey octave4" id="buttonG4">G</button>
+      <button class="inputButton blackKey octave4" id="buttonAb4">A♭</button>
+      <button class="inputButton whiteKey octave4" id="buttonA4">A</button>
+      <button class="inputButton blackKey octave4" id="buttonBb4">B♭</button>
+      <button class="inputButton whiteKey octave4" id="buttonB4">B</button>
     </div>
-    <div class="buttonSection">
+    <div class="outputPiano4"> <!-- 出力（ピアノロール） -->
+      <p>outputPiano4</p>
+    </div>
+    <div class="outputPiano3"> <!-- 出力（ピアノロール） -->
+      <p>outputPiano3</p>
+    </div>
+    <div class="buttonSection"> <!-- ボタン -->
       <button class="displayButton active" id="displayButtonChord">構成音<br>↓<br>コード</button>
       <button class="displayButton" id="displayButtonNotes">コード<br>↓<br>構成音</button>
       <button class="displayButton" id="displayButtonScale">コード<br>↓<br>メジャースケール</button>
