@@ -21,7 +21,10 @@ let chordSection = document.querySelectorAll('.chordSection');
 let notesSection = document.querySelectorAll('.notesSection');
 let scaleSection = document.querySelectorAll('.scaleSection');
 
-let inputButtons = document.querySelectorAll('.inputButton')
+let inputPiano = document.querySelectorAll('.inputPiano');
+let outputPiano = document.querySelectorAll('.outputPiano')
+let inputButtons = document.querySelectorAll('.inputButton');
+let outputButtons = document.querySelectorAll('.outputButton');
 
 // 機能切替ボタンのイベントリスナー
 displayButtonChord.addEventListener('click', () => switchSection(chordSection));
@@ -33,16 +36,33 @@ convertButtonChord.addEventListener('click', convertChord);
 convertButtonNotes.addEventListener('click', convertNotes);
 estimateButtonScale.addEventListener('click', estimateScale);
 
+function reset() {
+    inputChord.value = '';
+    inputNotes.value = '';
+    inputScale.value = '';
+    outputChord.value = '構成音を入力してください';
+    outputNotes.value = 'コードを入力してください';
+    outputScale.value = 'コードを入力してください';
+    inputButtons.forEach(button => button.classList.remove('active'));
+    outputButtons.forEach(button => button.classList.remove('active'));
+    outputButtons.forEach(button => button.classList.remove('tonic'));
+}
+
 // 機能切替ボタンのアクティブ状態管理
 displayButtons.forEach(button => {
     button.addEventListener('click', () => {
         displayButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
+        // テキストボックスをリセット
+        reset();
+
         if (button.id=='displayButtonChord') {
-            inputButtons.forEach(btn => btn.classList.remove('disabled'));
+            inputPiano.forEach(piano => piano.classList.remove('disabled'));
+            outputPiano.forEach(piano => piano.classList.add('disabled'));
         } else {
-            inputButtons.forEach(btn => btn.classList.add('disabled'));
+            inputPiano.forEach(piano => piano.classList.add('disabled'));
+            outputPiano.forEach(piano => piano.classList.remove('disabled'));
         }
     });
 });
@@ -60,6 +80,29 @@ inputButtons.forEach(button => {
         inputChord.value = inputButtonsList.join(', ');
     });
 });
+
+// 出力ボタンのアクティブ状態管理、テキストボックス書き換え
+function updateOutputButtons(midiNotes, tonic) {
+
+    // 初期化
+    outputButtons.forEach(button => button.classList.remove('active'));
+    outputButtons.forEach(button => button.classList.remove('tonic'));
+
+    if (!midiNotes) {
+        return;
+    }
+
+    midiNotes.forEach(midi => {
+        console.log(midi);
+        target = document.getElementById(`button${midi}`);
+        if (target) {
+            target.classList.add('active');
+        }
+        if (tonic === midi) {
+            target.classList.add('tonic');
+        }
+    });
+}
 
 // セクションの表示管理
 function switchSection(target) {
@@ -115,6 +158,7 @@ async function convertNotes() {
     }
 }
 
+// コード名から推定されるスケールを表示する関数
 async function estimateScale() {
     try {
         let chord_name = inputScale.value;
@@ -130,6 +174,14 @@ async function estimateScale() {
         console.log(data);
         
         outputScale.textContent = `${data.scales.replace(/#/g, '♯').replace(/-/g, '♭')}`;
+
+        console.log(data.midi_notes, data.tonic);
+        
+        if (!data.scales.includes(',')) {
+            updateOutputButtons(data.midi_notes, data.tonic);
+        } else {
+            updateOutputButtons([], '');
+        }
     } catch (error) {
         outputScale.textContent = (`Error: ${error.message}`);
     }

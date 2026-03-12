@@ -14,14 +14,15 @@ body {
   grid-template-areas:
     "title       title        title"
     ".           .            button"
+    "inputTitle  outputTitle  button"
     "inputText   outputText   button"
     "inputPiano4 outputPiano4 button"
     "inputPiano3 outputPiano3 button"
     ".           .            button";
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 200px;
-  grid-template-rows: 80px minmax(0, 1fr) minmax(0, 5fr) minmax(0, 10fr) minmax(0, 10fr) minmax(0, 1fr);
+  grid-template-rows: 80px minmax(0, 1fr) minmax(0, 2fr) minmax(0, 5fr) minmax(0, 10fr) minmax(0, 10fr) minmax(0, 1fr);
   height: 100vh;
-  background-color: rgb(235, 225, 235);
+  background-color: rgb(255, 235, 255);
 }
 
 .title {
@@ -32,6 +33,20 @@ body {
   align-items: center;
   justify-content: left;
   padding-left: 16px;
+}
+
+.inputTitle {
+  grid-area: inputTitle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outputTitle {
+  grid-area: outputTitle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .inputText {
@@ -59,6 +74,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .outputPiano4 {
@@ -66,6 +82,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .inputPiano3 {
@@ -73,6 +90,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .outputPiano3 {
@@ -80,6 +98,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .buttonSection {
@@ -156,7 +175,16 @@ body {
   transition: all 0.3s ease;
 }
 
-.inputButton.whiteKey {
+.outputButton {
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.whiteKey {
   background-color: rgb(255, 230, 255);
   color: rgb(50, 25, 50);
   width: 70px;
@@ -164,13 +192,13 @@ body {
   padding-top: 100px;
   z-index: 1;
   border: 2px solid rgb(240, 200, 240);
-
-  &:hover {
-    background-color: rgb(220, 150, 220);
-  }
 }
 
-.inputButton.blackKey {
+.inputButton.whiteKey:hover {
+  background-color: rgb(220, 150, 220);
+}
+
+.blackKey {
   background-color: rgb(50, 25, 50);
   color: rgb(255, 230, 255);
   height: 90px;
@@ -182,20 +210,32 @@ body {
   align-items: center;
   z-index: 2;
   border: 2px solid rgb(100, 50, 100);
-    
-  &:hover {
-    background-color: rgb(120, 60, 120);
-  }
 }
 
-.inputButton.whiteKey.active {
+.inputButton.blackKey:hover {
+  background-color: rgb(120, 60, 120);
+}
+
+.whiteKey.active {
   background-color: rgb(220, 150, 220);
   box-shadow: 0 0 20px rgba(150, 75, 150, 0.3);
 }
 
-.inputButton.blackKey.active {
+.blackKey.active {
   background-color: rgb(120, 60, 120);
   box-shadow: 0 0 20px rgba(150, 75, 150, 0.3);
+}
+
+.whiteKey.active.tonic {
+  background-color: rgb(150, 220, 220);
+  box-shadow: 0 0 20px rgba(75, 150, 150, 0.3);
+  border: 2px solid rgb(200, 240, 240);
+}
+
+.blackKey.active.tonic {
+  background-color: rgb(60, 120, 120);
+  box-shadow: 0 0 20px rgba(75, 150, 150, 0.3);
+  border: 2px solid rgb(50, 100, 100);
 }
 
 .hidden {
