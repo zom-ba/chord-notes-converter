@@ -19,6 +19,7 @@ def identify_chord(notes: str = ""):
         chord_name = harmony.chordSymbolFromChord(chord_obj).figure # コードオブジェクトからコード名を取得
         if " " in chord_name:
             return {
+                "error": "Unidentified",
                 "chord_name": "コードを特定できませんでした"
             }
         return {
@@ -98,6 +99,7 @@ def estimate_scale(chord_name: str = ""):
 
         if not scales_list: # スケールが見つからない場合の処理
             return {
+                "error": "Unidentified",
                 "scales": "このコードが使われるメジャースケールは見つかりませんでした"
             }
 
