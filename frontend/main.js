@@ -1,16 +1,22 @@
-// 要素の取得
+if (location.hostname !== "localhost") {
+    console.log = function() {};
+}
 
+// 要素の取得
 const inputChord = document.getElementById('inputChord');
-const convertButtonChord = document.getElementById('convertButtonChord');
 const outputChord = document.getElementById('outputChord');
 
 const inputNotes = document.getElementById('inputNotes');
-const convertButtonNotes = document.getElementById('convertButtonNotes');
 const outputNotes = document.getElementById('outputNotes');
 
 const inputScale = document.getElementById('inputScale');
-const estimateButtonScale = document.getElementById('estimateButtonScale');
 const outputScale = document.getElementById('outputScale');
+
+const outputText = document.querySelectorAll('.outputText');
+const inputPiano = document.querySelectorAll('.inputPiano');
+const outputPiano = document.querySelectorAll('.outputPiano')
+const inputButtons = document.querySelectorAll('.inputButton');
+const outputButtons = document.querySelectorAll('.outputButton');
 
 const displayButtonChord = document.getElementById('displayButtonChord');
 const displayButtonNotes = document.getElementById('displayButtonNotes');
@@ -22,20 +28,25 @@ const notesSection = document.querySelectorAll('.notesSection');
 const scaleSection = document.querySelectorAll('.scaleSection');
 const outputWarning = document.getElementById('outputWarning');
 
-const inputPiano = document.querySelectorAll('.inputPiano');
-const outputPiano = document.querySelectorAll('.outputPiano')
-const inputButtons = document.querySelectorAll('.inputButton');
-const outputButtons = document.querySelectorAll('.outputButton');
-
 // 機能切替ボタンのイベントリスナー
 displayButtonChord.addEventListener('click', () => switchSection(chordSection));
 displayButtonNotes.addEventListener('click', () => switchSection(notesSection));
 displayButtonScale.addEventListener('click', () => switchSection(scaleSection));
 
-// イベントリスナーの追加
-convertButtonChord.addEventListener('click', convertChord);
-convertButtonNotes.addEventListener('click', convertNotes);
-estimateButtonScale.addEventListener('click', estimateScale);
+// 入力監視
+let timeoutId;
+inputChord.addEventListener('input', () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(convertChord, 100);
+});
+inputNotes.addEventListener('input', () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(convertNotes, 100);
+});
+inputScale.addEventListener('input', () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(estimateScale, 100);
+});
 
 function reset() {
     inputChord.value = '';
@@ -49,6 +60,7 @@ function reset() {
     inputButtons.forEach(button => button.classList.remove('active'));
     outputButtons.forEach(button => button.classList.remove('active'));
     outputButtons.forEach(button => button.classList.remove('bass'));
+    outputText.forEach(el => el.classList.remove('active'));
 }
 
 // 機能切替ボタンのアクティブ状態管理
@@ -81,6 +93,7 @@ inputButtons.forEach(button => {
             }
         });
         inputChord.value = inputButtonsList.join(', ');
+        convertChord();
     });
 });
 
@@ -131,6 +144,11 @@ async function convertChord() {
         console.log(data);
 
         outputChord.textContent = `${data.chord_name.replace(/#/g, '♯').replace(/-/g, '♭')}`;
+        if (!data.error) {
+            outputText.forEach(el => el.classList.add('active'));
+        } else {
+            outputText.forEach(el => el.classList.remove('active'));
+        }
     } catch (error) {
         outputChord.textContent = (`Error: ${error.message}`);
     }
@@ -152,12 +170,20 @@ async function convertNotes() {
         console.log(data);
         
         outputNotes.textContent = `${data.notes.replace(/#/g, '♯').replace(/-/g, '♭')}`;
+
         if (data.midi_notes && data.root) {
             console.log(data.test);
             updateOutputButtons(data.midi_notes, data.root);
         } else {
             updateOutputButtons([], '');
         }
+
+        if (!data.error) {
+            outputText.forEach(el => el.classList.add('active'));
+        } else {
+            outputText.forEach(el => el.classList.remove('active'));
+        }
+
         if (data.warning) {
             outputWarning.textContent = `${data.warning}`;
             outputWarning.classList.remove('hidden');
@@ -187,13 +213,17 @@ async function estimateScale() {
         console.log(data);
         
         outputScale.textContent = `${data.scales.replace(/#/g, '♯').replace(/-/g, '♭')}`;
-
-        console.log(data.midi_notes, data.tonic);
         
         if (data.midi_notes && data.tonic) {
             updateOutputButtons(data.midi_notes, data.tonic);
         } else {
             updateOutputButtons([], '');
+        }
+
+        if (!data.error) {
+            outputText.forEach(el => el.classList.add('active'));
+        } else {
+            outputText.forEach(el => el.classList.remove('active'));
         }
     } catch (error) {
         outputScale.textContent = (`Error: ${error.message}`);
