@@ -61,11 +61,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.chordSection, .notesSection, .scaleSection {
-  display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
 }
 
@@ -226,13 +222,13 @@ body {
   box-shadow: 0 0 20px rgba(150, 75, 150, 0.3);
 }
 
-.whiteKey.active.tonic {
+.whiteKey.active.bass {
   background-color: rgb(150, 220, 220);
   box-shadow: 0 0 20px rgba(75, 150, 150, 0.3);
   border: 2px solid rgb(200, 240, 240);
 }
 
-.blackKey.active.tonic {
+.blackKey.active.bass {
   background-color: rgb(60, 120, 120);
   box-shadow: 0 0 20px rgba(75, 150, 150, 0.3);
   border: 2px solid rgb(50, 100, 100);
