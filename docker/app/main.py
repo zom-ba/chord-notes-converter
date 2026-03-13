@@ -43,9 +43,24 @@ def identify_notes(chord_name: str = ""):
     try: # 構成音を返す処理
         chord_obj = harmony.ChordSymbol(chord_name) # コード名からコードオブジェクトを作成
         notes = ", ".join([note.name for note in chord_obj.pitches]) # コードオブジェクトから構成音のリストを取得
-        return {
-            "notes": notes
-        }
+
+        root_pitch = 48 + chord_obj.pitches[0].pitchClass # ルート音のピッチクラスを取得
+        offset = root_pitch - chord_obj.pitches[0].midi # オフセットを計算
+        midi_notes = [p.midi + offset for p in chord_obj.pitches] # 構成音のMIDI番号をリストに変換
+
+        if midi_notes[0] < 48 or midi_notes[-1] > 72: # MIDI番号が範囲外の場合の処理
+            return {
+                "notes": notes,
+                "midi_notes": midi_notes,
+                "root": midi_notes[0],
+                "warning": "ピアノロール範囲外の音が含まれています"
+            }
+        else:
+            return {
+                "notes": notes,
+                "midi_notes": midi_notes,
+                "root": midi_notes[0],
+            }
 
     except Exception as e: # エラー処理
         return {
