@@ -19,8 +19,9 @@ body {
     "inputPiano3 outputPiano3 button"
     ".           .            button";
   grid-template-columns: minmax(500px, 1fr) minmax(500px, 1fr) 200px;
-  grid-template-rows: 80px minmax(0px, 1fr) minmax(40px, 2fr) minmax(100px, 5fr) minmax(170px, 10fr) minmax(0px, 10fr) minmax(0px, 1fr);
+  grid-template-rows: 80px minmax(20px, 1fr) minmax(40px, 2fr) minmax(100px, 5fr) minmax(180px, 10fr) minmax(180px, 10fr) minmax(20px, 1fr);
   background-color: rgb(255, 235, 255);
+  height: 100vh;
   margin: 0 auto;
 }
 
