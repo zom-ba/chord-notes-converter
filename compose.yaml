@@ -1,10 +1,10 @@
 services:
 
   app: # アプリケーション
-    build: ./docker/app
+    build: ./backend/app
     volumes: # アプリケーションコードをバインドマウント
       - type: bind
-        source: ./docker/app
+        source: ./backend/app
         target: /app
 
   web: # Webサーバー
@@ -13,7 +13,7 @@ services:
       - "8080:80"
     volumes: # Nginxの設定ファイルをバインドマウント
       - type: bind
-        source: ./docker/web/nginx.conf
+        source: ./frontend/web/nginx.conf
         target: /etc/nginx/conf.d/default.conf
       - type: bind
         source: ./frontend
